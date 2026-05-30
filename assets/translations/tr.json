@@ -1,0 +1,22 @@
+{
+  "app": {
+    "name": "SkyTracker",
+    "tagline": "Uçuşları gerçek zamanlı takip et"
+  },
+  "common": {
+    "retry": "Tekrar dene",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "switchToMock": "Mock veriye geç",
+    "loading": "Yükleniyor..."
+  },
+  "error": {
+    "server": "Sunucu hatası oluştu. Lütfen tekrar deneyin.",
+    "network": "İnternet bağlantısı yok.",
+    "auth": "Kimlik doğrulama başarısız.",
+    "rateLimit": "API limitine ulaşıldı. Daha sonra deneyin.",
+    "cache": "Yerel veri hatası.",
+    "location": "Konumunuza erişilemedi.",
+    "unknown": "Bir şeyler ters gitti."
+  }
+}

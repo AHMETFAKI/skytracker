@@ -1,5 +1,5 @@
 name: skytracker
-description: "A new Flutter project."
+description: "SkyTracker — real-time flight tracker (Flutter, Clean Architecture)."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -34,6 +34,26 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  flutter_hooks: ^0.21.3+1
+  hooks_riverpod: ^3.3.1
+  get_it: ^9.2.1
+  injectable: ^3.0.0
+  auto_route: ^11.1.0
+  dio: ^5.9.2
+  fpdart: ^1.2.0
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+  easy_localization: ^3.0.8
+  flutter_screenutil: ^5.9.3
+  geolocator: ^14.0.1
+  permission_handler: ^12.0.2
+  shared_preferences: ^2.5.5
+  flutter_secure_storage: ^10.3.1
+  flutter_dotenv: ^6.0.1
+  firebase_core: ^4.9.0
+  firebase_auth: ^6.5.1
+  cloud_firestore: ^6.4.1
+  maplibre_gl: ^0.26.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +65,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  build_runner: ^2.15.0
+  freezed: ^3.2.5
+  json_serializable: ^6.14.0
+  injectable_generator: ^3.0.2
+  auto_route_generator: ^10.5.0
+  mocktail: ^1.0.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -57,10 +83,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - .env
+    - assets/mock/
+    - assets/images/
+    - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

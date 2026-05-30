@@ -10,14 +10,16 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
 - [ ] `gh repo create skytracker --public` + ilk commit/push
 - Commit: `chore: project docs & repo setup`
 
-## Faz 1 — Bağımlılıklar & yapı
-- [ ] `pubspec.yaml` tüm zorunlu + destek paketleri
-- [ ] `analysis_options.yaml` sıkılaştırma
-- [ ] Klasör iskeleti (core/ + features/)
-- [ ] Android `minSdk=23`, izinler (INTERNET, konum), `applicationId`
-- [ ] `main.dart` + `bootstrap.dart`, ScreenUtil + EasyLocalization init, `tr/en.json` iskelet
-- [ ] İlk `build_runner` koşusu temiz
+## Faz 1 — Bağımlılıklar & yapı ✅
+- [x] `pubspec.yaml` tüm zorunlu + destek paketleri
+- [x] `analysis_options.yaml` sıkılaştırma (+ generated exclude)
+- [x] Mobil-odak: desktop/web platform iskeletleri kaldırıldı (android + ios)
+- [x] Android `minSdk=23`, izinler (INTERNET, ACCESS_NETWORK_STATE, konum)
+- [x] `main.dart` + `bootstrap.dart` + `app.dart`, ScreenUtil + EasyLocalization init
+- [x] `assets/` (mock json, translations tr/en, images placeholder) + `.env`
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil
 - Commit: `chore: dependencies & project skeleton`
+- Not: klasör iskeleti (core/ + features/) gerçek dosyalarla Faz 2'de oluşturulacak.
 
 ## Faz 2 — Core
 - [ ] `Failure` (freezed), Exception'lar, `failure_mapper`
