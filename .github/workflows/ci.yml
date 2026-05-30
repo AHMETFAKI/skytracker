@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # .env is gitignored but declared as a bundled asset in pubspec.yaml.
+      # Create it from the example so analyze/build find the asset; mock-first
+      # mode needs no real keys (OpenSky/MapTiler stay empty).
+      - name: Create .env from example
+        run: cp .env.example .env
+
       # Generated code (*.g.dart, *.freezed.dart, *.gr.dart, *.config.dart) is
       # gitignored, so it must be regenerated in CI before analyze/test/build.
       - name: Generate code

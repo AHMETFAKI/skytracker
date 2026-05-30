@@ -9,10 +9,12 @@ Adımlar:
 1. `actions/checkout`
 2. `subosito/flutter-action` ile Flutter **stable** kurulumu (cache açık).
 3. `flutter pub get`
-4. `dart run build_runner build --delete-conflicting-outputs`
-5. `flutter analyze` (uyarı/hatada kırmızı)
-6. `flutter test`
-7. `flutter build apk --debug` (derlenebilirlik kanıtı)
+4. `cp .env.example .env` — `.env` gitignore'da ama pubspec'te asset olarak tanımlı; eksikse
+   `flutter analyze` "asset doesn't exist" uyarısıyla kırmızı olur. Mock-first için boş anahtarlar yeterli.
+5. `dart run build_runner build --delete-conflicting-outputs`
+6. `flutter analyze` (uyarı/hatada kırmızı)
+7. `flutter test`
+8. `flutter build apk --debug` (derlenebilirlik kanıtı)
 
 > **Firebase (çözüldü):** CI'da gerçek `google-services.json` yoktur ve **dummy dosya da
 > gerekmez**. `android/app/build.gradle.kts` içinde `google-services` Gradle eklentisi yalnızca
