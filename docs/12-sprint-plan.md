@@ -69,11 +69,15 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
   Canlı auth doğrulaması (kayıt/giriş → Firestore dokümanı) gerçek Firebase projesi gerektirir; rules
   Rules Simulator/CI ile doğrulanacak. `AuthGuard` redirect → Faz 6 (shell ile birlikte).
 
-## Faz 6 — Shell & Profil
-- [ ] `AutoTabsScaffold` 2 sekme (Harita/Profil)
-- [ ] Profil: oku / Ad Soyad düzenle / çıkış
-- [ ] `AuthGuard` redirect
+## Faz 6 — Shell & Profil ✅
+- [x] `HomeShellPage` (`AutoTabsScaffold`) 2 sekme (Harita/Profil) + radar temalı `BottomNavigationBar`
+- [x] `ProfilePage` + `ProfileController` (Firestore `users/{uid}` oku, `fullName` düzenle bottom sheet, çıkış)
+- [x] `AuthGuard` → kimlik yoksa `LoginRoute`'a yönlendirir; Firebase yapılandırılmamışsa no-op (mock-first geçişi açık)
+- [x] Giriş/kayıt başarısında `HomeShellRoute`'a `replaceAll`; oturum kapalıyken profil sekmesi "giriş yap" CTA'sı
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil (17 test)
 - Commit: `feat: shell navigation & profile screen`
+- Not: Sekme geçişi + profil düzenleme canlı doğrulaması gerçek Firebase oturumu gerektirir; guard mantığı
+  hem yapılandırılmış (auth zorunlu) hem mock-first (auth bypass) senaryosunu kapsar.
 
 ## Faz 7 — Lokalizasyon & cila
 - [ ] TR/EN tüm anahtarlar

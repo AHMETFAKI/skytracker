@@ -33,6 +33,21 @@
     "ft": "ft",
     "kmh": "km/h"
   },
+  "shell": {
+    "tab": {
+      "map": "Map",
+      "profile": "Profile"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "fullName": "Full name",
+    "email": "Email",
+    "memberSince": "Member since",
+    "editName": "Edit name",
+    "logout": "Sign out",
+    "signedOut": "Sign in to view your profile."
+  },
   "auth": {
     "login": {
       "title": "Welcome back",

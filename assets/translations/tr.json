@@ -33,6 +33,21 @@
     "ft": "ft",
     "kmh": "km/h"
   },
+  "shell": {
+    "tab": {
+      "map": "Harita",
+      "profile": "Profil"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "fullName": "Ad Soyad",
+    "email": "E-posta",
+    "memberSince": "Üyelik tarihi",
+    "editName": "Adı düzenle",
+    "logout": "Çıkış yap",
+    "signedOut": "Profilini görmek için giriş yap."
+  },
   "auth": {
     "login": {
       "title": "Tekrar hoş geldin",
