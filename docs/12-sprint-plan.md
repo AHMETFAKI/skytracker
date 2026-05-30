@@ -88,10 +88,14 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
 - [x] `flutter analyze` 0 issue, `flutter test` yeşil (18 test: +1 çeviri parity)
 - Commit: `feat: localization & ui polish`
 
-## Faz 8 — CI/CD & test
-- [ ] `.github/workflows/ci.yml`
-- [ ] Birim testleri (validators, failure_mapper, dto)
+## Faz 8 — CI/CD & test ✅
+- [x] `.github/workflows/ci.yml` (checkout → JDK 17 → Flutter 3.41.1 → pub get → build_runner → analyze → test → debug APK)
+- [x] Koşullu `google-services` eklentisi sayesinde CI'da APK derlemesi dummy secret gerektirmez (tolerant Firebase init)
+- [x] Birim testleri: `validators_test` (12) + `failure_mapper_test` (10) eklendi
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil (39 test)
 - Commit: `ci: github actions + unit tests`
+- Not: Lokal `flutter build apk` bu ortamda Gradle loopback kısıtı nedeniyle koşulamıyor; derleme
+  kanıtı CI runner'ında üretilir (debug APK adımı).
 
 ## Faz 9 — Teslim
 - [ ] Kök `README.md` + `FIREBASE_README.md` final
