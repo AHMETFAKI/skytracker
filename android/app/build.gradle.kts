@@ -5,6 +5,12 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// Apply Firebase's google-services plugin only when the config file exists.
+// Keeps mock-first / CI builds green without committing google-services.json.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 android {
     namespace = "com.skytracker.skytracker"
     compileSdk = flutter.compileSdkVersion

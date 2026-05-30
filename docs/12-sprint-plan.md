@@ -57,12 +57,17 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
   cihazı/emülatöründe yapılmalı. APK derlemesi bu ortamda Gradle loopback kısıtı nedeniyle koşulamadı;
   Faz 8 CI runner'ında doğrulanacak.
 
-## Faz 5 — Auth & Firestore
-- [ ] `IAuthRepository` + Firebase impl (register/login/logout)
-- [ ] Firestore `users/{uid}` yaz/oku
-- [ ] Login/Register sayfaları + validasyon + "Beni Hatırlat"
-- [ ] `firestore.rules`
+## Faz 5 — Auth & Firestore ✅
+- [x] `IAuthRepository` + `FirebaseAuthRepository` (register/login/logout, `users/{uid}` oku/yaz, `fullName` update)
+- [x] `AppUser` entity (freezed) + `AuthFailureMapper` (Firebase kodları → lokalize `Failure`)
+- [x] Login/Register sayfaları (hooks, validator'lı) + "Beni Hatırlat" (`RememberMeStore` + cold-start oturum temizliği)
+- [x] Tolerant Firebase init (config yoksa app çökmeden mock-first çalışır) + koşullu `google-services` Gradle eklentisi
+- [x] `firestore.rules` (kullanıcı yalnızca kendi dokümanı; `update` yalnızca `fullName`; default-deny)
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil (17 test: +5 AuthFailureMapper)
 - Commit: `feat: auth & firestore profile`
+- Not: `firebase_options.dart` / `google-services.json` gitignore — kullanıcı `flutterfire configure` ile üretir.
+  Canlı auth doğrulaması (kayıt/giriş → Firestore dokümanı) gerçek Firebase projesi gerektirir; rules
+  Rules Simulator/CI ile doğrulanacak. `AuthGuard` redirect → Faz 6 (shell ile birlikte).
 
 ## Faz 6 — Shell & Profil
 - [ ] `AutoTabsScaffold` 2 sekme (Harita/Profil)

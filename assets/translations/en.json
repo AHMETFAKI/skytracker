@@ -33,6 +33,27 @@
     "ft": "ft",
     "kmh": "km/h"
   },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to track flights in real time.",
+      "action": "Sign in",
+      "rememberMe": "Remember me",
+      "toRegister": "No account? Create one"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Set up your SkyTracker account.",
+      "action": "Create account",
+      "toLogin": "Already have an account? Sign in"
+    },
+    "field": {
+      "fullName": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    }
+  },
   "error": {
     "server": "A server error occurred. Please try again.",
     "network": "No internet connection.",
@@ -40,7 +61,13 @@
     "rateLimit": "API rate limit reached. Try again later.",
     "cache": "Local data error.",
     "location": "Could not access your location.",
-    "unknown": "Something went wrong."
+    "unknown": "Something went wrong.",
+    "invalidEmail": "Enter a valid email address.",
+    "userDisabled": "This account has been disabled.",
+    "invalidCredentials": "Incorrect email or password.",
+    "emailInUse": "This email is already registered.",
+    "weakPassword": "Password is too weak.",
+    "tooManyRequests": "Too many attempts. Try again later."
   },
   "validation": {
     "emailRequired": "Email is required.",
