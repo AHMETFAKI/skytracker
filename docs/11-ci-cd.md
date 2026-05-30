@@ -14,11 +14,20 @@ Adımlar:
 6. `flutter test`
 7. `flutter build apk --debug` (derlenebilirlik kanıtı)
 
-> Firebase: CI'da gerçek `google-services.json` yoktur. Build'in firebase olmadan da
-> derlenebilmesi için Android tarafında placeholder strateji izlenir veya APK build adımı
-> `DATA_SOURCE=mock` ve dummy `google-services.json` (CI secret) ile yapılır. Tercih:
-> CI'da APK adımı yalnızca **analyze+test** sonrası, eksik secret'ta `continue-on-error` yerine
-> minimal dummy ile derlenir (karar Faz 8'de netleşir, burada güncellenir).
+> **Firebase (çözüldü):** CI'da gerçek `google-services.json` yoktur ve **dummy dosya da
+> gerekmez**. `android/app/build.gradle.kts` içinde `google-services` Gradle eklentisi yalnızca
+> dosya mevcutsa uygulanır (`if (file("google-services.json").exists())`). Böylece debug APK,
+> mock-first konfigürasyonda sorunsuz derlenir; `firebase_init.dart` tolerant init ile config
+> yokken uygulama çökmeden çalışır. CI bu sayede ekstra secret olmadan derleme kanıtı üretir.
+
+## Birim testleri (Faz 8)
+`flutter test` adımının kapsadığı saf birim testleri (toplam 39 test):
+- `validators_test.dart` — e-posta/şifre/şifre tekrar/ad doğrulayıcıları (i18n key dönüşleri).
+- `failure_mapper_test.dart` — `AppException` ve `DioException` (401/429/500, timeout, unknown) → `Failure`.
+- `auth_failure_mapper_test.dart` — Firebase auth kodları → lokalize `Failure`.
+- `flight_state_dto_test.dart` — OpenSky state vector → DTO/Entity map'leme.
+- `unit_converters_test.dart` — m→ft, m/s→km/h/knots dönüşümleri ve formatlama.
+- `translations_parity_test.dart` — TR/EN anahtar kümesi eşitliği.
 
 ## Tetikleyiciler
 - `push` → `main`

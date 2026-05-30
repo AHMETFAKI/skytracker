@@ -13,7 +13,7 @@ Durum sütunu ilerledikçe güncellenir.
 | 5 | Auth & Firestore | `feat: auth & firestore profile` | ✅ |
 | 6 | Shell + Profil | `feat: shell navigation & profile screen` | ✅ |
 | 7 | Lokalizasyon & cila | `feat: localization & ui polish` | ✅ |
-| 8 | CI/CD & test | `ci: github actions + unit tests` | ⬜ |
+| 8 | CI/CD & test | `ci: github actions + unit tests` | ✅ |
 | 9 | Teslim | `docs: delivery readme + apk` | ⬜ |
 
 ## Faz çıktıları (özet)
