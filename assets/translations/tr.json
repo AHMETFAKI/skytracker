@@ -46,7 +46,8 @@
     "memberSince": "Üyelik tarihi",
     "editName": "Adı düzenle",
     "logout": "Çıkış yap",
-    "signedOut": "Profilini görmek için giriş yap."
+    "signedOut": "Profilini görmek için giriş yap.",
+    "language": "Dil"
   },
   "auth": {
     "login": {

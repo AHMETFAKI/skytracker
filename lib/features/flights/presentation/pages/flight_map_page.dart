@@ -195,8 +195,6 @@ class _MapErrorOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i18nKey =
-        failure is Failure ? (failure! as Failure).i18nKey : 'error.unknown';
     final canFallback =
         failure is Failure && (failure! as Failure).isFallbackCandidate;
 
@@ -211,7 +209,7 @@ class _MapErrorOverlay extends StatelessWidget {
               Icon(Icons.cloud_off, size: 48.sp, color: AppColors.error),
               SizedBox(height: 16.h),
               Text(
-                i18nKey.tr(),
+                failureMessage(failure),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 24.h),

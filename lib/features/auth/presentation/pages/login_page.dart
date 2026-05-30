@@ -53,6 +53,11 @@ class LoginPage extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: LanguageToggle(),
+                  ),
+                  SizedBox(height: 8.h),
                   Icon(Icons.radar, size: 64.sp, color: AppColors.primary),
                   SizedBox(height: 16.h),
                   Text(

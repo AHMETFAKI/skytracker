@@ -100,6 +100,17 @@ class _ProfileContent extends ConsumerWidget {
             ],
           ),
         ),
+        SizedBox(height: 16.h),
+        GlassCard(
+          child: Row(
+            children: [
+              Icon(Icons.language, size: 20.sp, color: AppColors.onSurfaceMuted),
+              SizedBox(width: 12.w),
+              Expanded(child: Text('profile.language'.tr())),
+              const LanguageToggle(),
+            ],
+          ),
+        ),
         SizedBox(height: 24.h),
         AppButton(
           label: 'profile.editName'.tr(),

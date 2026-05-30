@@ -79,10 +79,13 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
 - Not: Sekme geçişi + profil düzenleme canlı doğrulaması gerçek Firebase oturumu gerektirir; guard mantığı
   hem yapılandırılmış (auth zorunlu) hem mock-first (auth bypass) senaryosunu kapsar.
 
-## Faz 7 — Lokalizasyon & cila
-- [ ] TR/EN tüm anahtarlar
-- [ ] Responsive geçiş kontrolü
-- [ ] loading/empty/error tutarlılığı
+## Faz 7 — Lokalizasyon & cila ✅
+- [x] TR/EN tüm anahtarlar tam; `translations_parity_test` ile anahtar kümeleri eşitlik garantisi
+- [x] `LanguageToggle` (runtime TR/EN geçişi) — login ve profil ekranlarında
+- [x] Hata gösterimi tek noktadan: `failureMessage`/`showFailureSnackBar`; harita error overlay'i de bu yardımcıyı kullanır
+- [x] loading/empty/error tutarlılığı: `LoadingView`/`EmptyView`/`AppErrorView` ortak widget'larıyla
+- [x] Tüm kullanıcı metinleri `.tr()` (hardcoded string yok); ScreenUtil ile responsive ölçekleme
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil (18 test: +1 çeviri parity)
 - Commit: `feat: localization & ui polish`
 
 ## Faz 8 — CI/CD & test
