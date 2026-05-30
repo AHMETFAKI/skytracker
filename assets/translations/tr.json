@@ -10,6 +10,29 @@
     "switchToMock": "Mock veriye geç",
     "loading": "Yükleniyor..."
   },
+  "map": {
+    "title": "Canlı Uçuşlar",
+    "mockBanner": "Mock uçuş verisi gösteriliyor",
+    "fallbackBanner": "OpenSky erişilemedi — mock veri gösteriliyor",
+    "empty": "Şu anda görünümde uçuş yok.",
+    "myLocation": "Konumum",
+    "locationDenied": "Konum izni reddedildi.",
+    "locationDisabled": "Konum servisleri kapalı."
+  },
+  "flight": {
+    "callsign": "Çağrı kodu",
+    "country": "Menşe ülke",
+    "altitude": "İrtifa",
+    "speed": "Hız",
+    "status": "Durum",
+    "onGround": "Yerde",
+    "airborne": "Havada",
+    "unknownCallsign": "Bilinmiyor"
+  },
+  "units": {
+    "ft": "ft",
+    "kmh": "km/h"
+  },
   "error": {
     "server": "Sunucu hatası oluştu. Lütfen tekrar deneyin.",
     "network": "İnternet bağlantısı yok.",
