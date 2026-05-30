@@ -37,7 +37,7 @@ class RegisterPage extends HookConsumerWidget {
           );
       if (!context.mounted) return;
       if (ok) {
-        await context.router.replaceAll([const FlightMapRoute()]);
+        await context.router.replaceAll([const HomeShellRoute()]);
       } else {
         showFailureSnackBar(context, ref.read(authControllerProvider).error);
       }
