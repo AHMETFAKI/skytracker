@@ -34,14 +34,16 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
 - Not: `AuthInterceptor` (OpenSky token) → Faz 3'e, `AuthGuard` (auth state) → Faz 5/6'ya ertelendi.
   `AppScaffold` ihtiyaç anında (Faz 4 shell) eklenecek; temel iskelet `Scaffold` + tema ile karşılanıyor.
 
-## Faz 3 — Flights domain + data
-- [ ] `FlightEntity`, `IFlightRepository`
-- [ ] `FlightStateDto` (pozisyonel fromJson) + `toEntity`
-- [ ] `FlightMockDataSource` + `assets/mock/flights_mock.json`
-- [ ] `FlightRemoteDataSource` (OpenSky OAuth2) + token cache
-- [ ] `@Environment('mock'/'remote')` repo'lar + DATA_SOURCE switch
-- [ ] Birim testleri (DTO map, converters)
+## Faz 3 — Flights domain + data ✅
+- [x] `FlightEntity` (freezed) + `BoundingBox` + `IFlightRepository`
+- [x] `FlightStateDto` (pozisyonel `fromStateVector`) + `toEntity` (konumsuz uçak elenir)
+- [x] `FlightMockDataSource` + mevcut `assets/mock/flights_mock.json` (OpenSky şeması)
+- [x] `OpenSkyAuthService` (OAuth2 client-credentials, secure storage token cache) + `AuthInterceptor` (401→tek yenileme)
+- [x] `FlightRemoteDataSource` (named `opensky` Dio: retry+auth+log) + `FlightRemoteRepository`
+- [x] `@Environment('mock'/'remote')` binding modülü; mock repo her ortamda concrete (fallback'a hazır)
+- [x] Birim testleri (DTO map + toEntity, unit converters) — 12 test yeşil
 - Commit: `feat: flights data layer + mock/remote switching`
+- Not: `AccessTokenProvider` core'da interface; OpenSky impl feature'da (Clean Arch bağımlılık yönü korunur).
 
 ## Faz 4 — Harita
 - [ ] `MapLibreMap` + MapTiler koyu stil (graceful degrade)
