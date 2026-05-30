@@ -1,0 +1,22 @@
+{
+  "app": {
+    "name": "SkyTracker",
+    "tagline": "Track flights in real time"
+  },
+  "common": {
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "switchToMock": "Switch to mock data",
+    "loading": "Loading..."
+  },
+  "error": {
+    "server": "A server error occurred. Please try again.",
+    "network": "No internet connection.",
+    "auth": "Authentication failed.",
+    "rateLimit": "API rate limit reached. Try again later.",
+    "cache": "Local data error.",
+    "location": "Could not access your location.",
+    "unknown": "Something went wrong."
+  }
+}
