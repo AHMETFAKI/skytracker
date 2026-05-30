@@ -14,7 +14,10 @@ Durum sütunu ilerledikçe güncellenir.
 | 6 | Shell + Profil | `feat: shell navigation & profile screen` | ✅ |
 | 7 | Lokalizasyon & cila | `feat: localization & ui polish` | ✅ |
 | 8 | CI/CD & test | `ci: github actions + unit tests` | ✅ |
-| 9 | Teslim | `docs: delivery readme + apk` | ⬜ |
+| 9 | Teslim | `docs: delivery readme + apk` | 🟡 |
+
+> 🟡 Faz 9: Teslim dokümanları (README + FIREBASE_README) finalize edildi ve repo public.
+> Release APK üretimi (lokal Gradle loopback kısıtı) ile demo videosu kullanıcı tarafında tamamlanır.
 
 ## Faz çıktıları (özet)
 

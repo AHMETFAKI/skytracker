@@ -65,3 +65,6 @@ ios/Runner/GoogleService-Info.plist
 # Build / release artifacts (APK delivered via GitHub Releases, not git)
 *.apk
 *.aab
+
+# Local agent/editor scratch
+.claude/

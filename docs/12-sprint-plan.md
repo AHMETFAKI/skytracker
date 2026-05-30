@@ -98,8 +98,8 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
   kanıtı CI runner'ında üretilir (debug APK adımı).
 
 ## Faz 9 — Teslim
-- [ ] Kök `README.md` + `FIREBASE_README.md` final
-- [ ] `flutter build apk --release` → APK
+- [x] Kök `README.md` (CI badge, Test/CI + APK bölümleri) + `FIREBASE_README.md` (mock-first davranışı) final
+- [x] Repo public + link: https://github.com/AHMETFAKI/skytracker
+- [ ] `flutter build apk --release` → APK (lokal ortamda Gradle loopback kısıtı; CI debug APK adımı derlenebilirliği kanıtlar — release APK kullanıcı cihazında/CI'da üretilir)
 - [ ] Demo videosu (kullanıcı)
-- [ ] Repo public + link
 - Commit: `docs: delivery readme + apk`
