@@ -18,5 +18,14 @@
     "cache": "Local data error.",
     "location": "Could not access your location.",
     "unknown": "Something went wrong."
+  },
+  "validation": {
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Enter a valid email address.",
+    "passwordRequired": "Password is required.",
+    "passwordTooShort": "Password must be at least 6 characters.",
+    "passwordMismatch": "Passwords do not match.",
+    "nameRequired": "Full name is required.",
+    "nameTooShort": "Enter your full name."
   }
 }

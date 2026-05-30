@@ -7,7 +7,7 @@ Durum sütunu ilerledikçe güncellenir.
 |---|---|---|---|
 | 0 | Repo & docs iskeleti | `chore: project docs & repo setup` | ✅ |
 | 1 | Bağımlılıklar & yapı | `chore: dependencies & project skeleton` | ✅ |
-| 2 | Core katman | `feat: core layer (error, network, di, router, theme)` | ⬜ |
+| 2 | Core katman | `feat: core layer (error, network, di, router, theme)` | ✅ |
 | 3 | Flights domain + data | `feat: flights data layer + mock/remote switching` | ⬜ |
 | 4 | Harita ekranı | `feat: flight map screen` | ⬜ |
 | 5 | Auth & Firestore | `feat: auth & firestore profile` | ⬜ |

@@ -21,15 +21,18 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
 - Commit: `chore: dependencies & project skeleton`
 - Not: klasör iskeleti (core/ + features/) gerçek dosyalarla Faz 2'de oluşturulacak.
 
-## Faz 2 — Core
-- [ ] `Failure` (freezed), Exception'lar, `failure_mapper`
-- [ ] `dio_client` + Auth/Retry interceptor + `network_info`
-- [ ] `injectable` DI (`configureDependencies(environment)`) + `register_module`
-- [ ] `auto_route` router + `AuthGuard`
-- [ ] Radar teması (colors/theme/text styles)
-- [ ] `unit_converters`, `validators`
-- [ ] Ortak widget'lar (AppButton/AppTextField/AppScaffold/Loading/Error/Empty/GlassCard)
+## Faz 2 — Core ✅
+- [x] `Failure` (freezed sealed) + Exception'lar + `failure_mapper` (Dio/AppException → Failure)
+- [x] `dio_client` (module) + `RetryInterceptor` (429 backoff) + `LogInterceptor` + `network_info`
+- [x] `injectable` DI (`configureDependencies(DataSource)`) + `register_module` (prefs, secure storage)
+- [x] `auto_route` router + placeholder `SplashRoute`
+- [x] Radar teması (colors/theme/text styles → `AppTheme.dark`)
+- [x] `unit_converters` (m→ft, m/s→km/h), `validators` (i18n key dönüşlü)
+- [x] Ortak widget'lar (AppButton/AppTextField/GlassCard/LoadingView/AppErrorView/EmptyView/MockDataBanner)
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil, build_runner üretildi
 - Commit: `feat: core layer (error, network, di, router, theme)`
+- Not: `AuthInterceptor` (OpenSky token) → Faz 3'e, `AuthGuard` (auth state) → Faz 5/6'ya ertelendi.
+  `AppScaffold` ihtiyaç anında (Faz 4 shell) eklenecek; temel iskelet `Scaffold` + tema ile karşılanıyor.
 
 ## Faz 3 — Flights domain + data
 - [ ] `FlightEntity`, `IFlightRepository`
