@@ -18,5 +18,14 @@
     "cache": "Yerel veri hatası.",
     "location": "Konumunuza erişilemedi.",
     "unknown": "Bir şeyler ters gitti."
+  },
+  "validation": {
+    "emailRequired": "E-posta gerekli.",
+    "emailInvalid": "Geçerli bir e-posta girin.",
+    "passwordRequired": "Şifre gerekli.",
+    "passwordTooShort": "Şifre en az 6 karakter olmalı.",
+    "passwordMismatch": "Şifreler eşleşmiyor.",
+    "nameRequired": "Ad soyad gerekli.",
+    "nameTooShort": "Ad soyadınızı girin."
   }
 }
