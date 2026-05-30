@@ -46,7 +46,8 @@
     "memberSince": "Member since",
     "editName": "Edit name",
     "logout": "Sign out",
-    "signedOut": "Sign in to view your profile."
+    "signedOut": "Sign in to view your profile.",
+    "language": "Language"
   },
   "auth": {
     "login": {

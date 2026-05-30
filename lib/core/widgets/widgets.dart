@@ -4,5 +4,6 @@ export 'app_text_field.dart';
 export 'empty_view.dart';
 export 'failure_snackbar.dart';
 export 'glass_card.dart';
+export 'language_toggle.dart';
 export 'loading_view.dart';
 export 'mock_data_banner.dart';
