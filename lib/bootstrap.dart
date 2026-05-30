@@ -6,6 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'app.dart';
 import 'core/config/data_source.dart';
 import 'core/di/injection.dart';
+import 'core/firebase/firebase_init.dart';
+import 'features/auth/data/auth_session.dart';
 
 /// App entrypoint shared by every flavor.
 ///
@@ -16,10 +18,12 @@ Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await dotenv.load(isOptional: true);
+  await initializeFirebase();
 
   const dataSourceDefine =
       String.fromEnvironment('DATA_SOURCE', defaultValue: 'mock');
   await configureDependencies(DataSource.fromString(dataSourceDefine));
+  await enforceRememberMeOnStartup();
 
   runApp(
     EasyLocalization(

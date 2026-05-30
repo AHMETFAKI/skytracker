@@ -33,6 +33,27 @@
     "ft": "ft",
     "kmh": "km/h"
   },
+  "auth": {
+    "login": {
+      "title": "Tekrar hoş geldin",
+      "subtitle": "Uçuşları gerçek zamanlı takip etmek için giriş yap.",
+      "action": "Giriş yap",
+      "rememberMe": "Beni hatırla",
+      "toRegister": "Hesabın yok mu? Oluştur"
+    },
+    "register": {
+      "title": "Hesap oluştur",
+      "subtitle": "SkyTracker hesabını oluştur.",
+      "action": "Hesap oluştur",
+      "toLogin": "Zaten hesabın var mı? Giriş yap"
+    },
+    "field": {
+      "fullName": "Ad Soyad",
+      "email": "E-posta",
+      "password": "Şifre",
+      "confirmPassword": "Şifre tekrar"
+    }
+  },
   "error": {
     "server": "Sunucu hatası oluştu. Lütfen tekrar deneyin.",
     "network": "İnternet bağlantısı yok.",
@@ -40,7 +61,13 @@
     "rateLimit": "API limitine ulaşıldı. Daha sonra deneyin.",
     "cache": "Yerel veri hatası.",
     "location": "Konumunuza erişilemedi.",
-    "unknown": "Bir şeyler ters gitti."
+    "unknown": "Bir şeyler ters gitti.",
+    "invalidEmail": "Geçerli bir e-posta girin.",
+    "userDisabled": "Bu hesap devre dışı bırakılmış.",
+    "invalidCredentials": "E-posta veya şifre hatalı.",
+    "emailInUse": "Bu e-posta zaten kayıtlı.",
+    "weakPassword": "Şifre çok zayıf.",
+    "tooManyRequests": "Çok fazla deneme. Daha sonra tekrar deneyin."
   },
   "validation": {
     "emailRequired": "E-posta gerekli.",

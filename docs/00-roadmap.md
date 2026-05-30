@@ -10,7 +10,7 @@ Durum sütunu ilerledikçe güncellenir.
 | 2 | Core katman | `feat: core layer (error, network, di, router, theme)` | ✅ |
 | 3 | Flights domain + data | `feat: flights data layer + mock/remote switching` | ✅ |
 | 4 | Harita ekranı | `feat: flight map screen` | ✅ |
-| 5 | Auth & Firestore | `feat: auth & firestore profile` | ⬜ |
+| 5 | Auth & Firestore | `feat: auth & firestore profile` | ✅ |
 | 6 | Shell + Profil | `feat: shell navigation & profile screen` | ⬜ |
 | 7 | Lokalizasyon & cila | `feat: localization & ui polish` | ⬜ |
 | 8 | CI/CD & test | `ci: github actions + unit tests` | ⬜ |
