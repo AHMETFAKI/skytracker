@@ -36,9 +36,15 @@ Yayınlama:
 firebase deploy --only firestore:rules
 ```
 
-## 5. Değerlendirici erişimi
+## 5. Mock-first davranışı
+Uygulama Firebase **yapılandırılmadan da** çalışır:
+- `lib/core/firebase/firebase_init.dart` toleranslı init yapar; config yoksa auth özellikleri
+  pasifleşir, uygulama çökmez (`isFirebaseReady == false`).
+- `android/app/build.gradle.kts` içinde `google-services` Gradle eklentisi yalnızca
+  `google-services.json` mevcutsa uygulanır → CI/mock derlemeleri secret gerektirmez.
+- `AuthGuard`, Firebase hazır değilken navigasyonu engellemez (mock-first geçiş açık); Firebase
+  yapılandırıldığında giriş zorunlu hale gelir.
+
+## 6. Değerlendirici erişimi
 Firestore veri yapısı ve kuralların incelenebilmesi için ilgili e-posta adresine **Viewer
 (Görüntüleyici)** / **Firebase QA** yetkisi verilecektir (adres teslim sonrası iletilecek).
-
----
-*Bu dosya Faz 5 ve Faz 9'da gerçek değerlerle güncellenecektir.*

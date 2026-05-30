@@ -1,9 +1,12 @@
 # SkyTracker ✈️
 
+[![CI](https://github.com/AHMETFAKI/skytracker/actions/workflows/ci.yml/badge.svg)](https://github.com/AHMETFAKI/skytracker/actions/workflows/ci.yml)
+
 Gerçek zamanlı uçuş verilerini ([OpenSky Network](https://opensky-network.org)) bir MapLibre
 haritası üzerinde takip eden Flutter uygulaması. PITON Technology Study Case projesi.
 
-> **Durum:** Geliştirme aşamasında — yol haritası için [`docs/00-roadmap.md`](docs/00-roadmap.md).
+> **Durum:** Tamamlandı — tüm fazlar için [`docs/00-roadmap.md`](docs/00-roadmap.md).
+> Her faz ayrı conventional commit ile push edilmiştir.
 
 ## Özellikler
 - 🗺️ MapLibre GL haritada uçaklar (GeoJSON Symbol Layer, `true_track` ile dönen ikonlar)
@@ -52,6 +55,23 @@ dart run build_runner watch --delete-conflicting-outputs   # geliştirirken
 ```
 > Üretilen dosyalar (`*.g.dart`, `*.freezed.dart`, `*.gr.dart`, `*.config.dart`) repoya
 > commit **edilmez**; lokalde ve CI'da üretilir.
+
+## Test & CI
+```bash
+flutter analyze   # 0 issue
+flutter test      # 39 test
+```
+Her push/PR'da [GitHub Actions](.github/workflows/ci.yml) çalışır: `pub get` → `build_runner`
+→ `analyze` → `test` → `flutter build apk --debug`. Debug APK, mock-first konfigürasyonda
+secret olmadan derlenir (koşullu `google-services` eklentisi). Detay:
+[`docs/11-ci-cd.md`](docs/11-ci-cd.md).
+
+## APK
+```bash
+flutter build apk --release   # build/app/outputs/flutter-apk/app-release.apk
+```
+APK çıktıları (`*.apk`, `*.aab`) repoya commit edilmez (gitignore); teslim APK'sı CI
+artifact'ı veya GitHub Release olarak paylaşılır.
 
 ## Mimari kararların gerekçeleri
 - **Clean Architecture (Data/Domain/Presentation):** test edilebilirlik ve katman izolasyonu;
