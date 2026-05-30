@@ -1,0 +1,30 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:skytracker/core/utils/unit_converters.dart';
+
+void main() {
+  group('UnitConverters', () {
+    test('metersToFeet converts using the standard factor', () {
+      expect(UnitConverters.metersToFeet(1000), closeTo(3280.84, 0.01));
+      expect(UnitConverters.metersToFeet(0), 0);
+    });
+
+    test('mpsToKmh converts m/s to km/h', () {
+      expect(UnitConverters.mpsToKmh(100), closeTo(360, 0.001));
+      expect(UnitConverters.mpsToKmh(0), 0);
+    });
+
+    test('mpsToKnots converts m/s to knots', () {
+      expect(UnitConverters.mpsToKnots(10), closeTo(19.4384, 0.001));
+    });
+
+    test('formatFeet rounds and renders null as a dash', () {
+      expect(UnitConverters.formatFeet(10000), '32808');
+      expect(UnitConverters.formatFeet(null), '—');
+    });
+
+    test('formatKmh rounds and renders null as a dash', () {
+      expect(UnitConverters.formatKmh(250), '900');
+      expect(UnitConverters.formatKmh(null), '—');
+    });
+  });
+}
