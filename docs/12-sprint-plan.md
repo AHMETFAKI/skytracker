@@ -45,13 +45,17 @@ Durum işaretleri ilerledikçe [00-roadmap.md](00-roadmap.md) ile senkron tutulu
 - Commit: `feat: flights data layer + mock/remote switching`
 - Not: `AccessTokenProvider` core'da interface; OpenSky impl feature'da (Clean Arch bağımlılık yönü korunur).
 
-## Faz 4 — Harita
-- [ ] `MapLibreMap` + MapTiler koyu stil (graceful degrade)
-- [ ] GeoJSON source + Symbol Layer + `iconRotate=true_track`
-- [ ] `flightsProvider` periyodik yenileme + fallback UX
-- [ ] Flight Info Bottom Sheet (ft + km/h + durum)
-- [ ] Konum FAB (geolocator + permission_handler)
+## Faz 4 — Harita ✅
+- [x] `MapLibreMap` + MapTiler koyu stil; anahtar yoksa demo stile graceful degrade (`AppConfig.mapStyleUrl`)
+- [x] GeoJSON source (`promoteId=icao24`) + Symbol Layer + `iconRotate=['get','bearing']`; ikon runtime'da çizilir (asset yok)
+- [x] `flightsControllerProvider` (AsyncNotifier) periyodik yenileme + otomatik/manuel mock fallback
+- [x] Flight Info Bottom Sheet (çağrı kodu, menşe, irtifa ft, hız km/h, yerde/havada)
+- [x] Konum FAB (permission_handler izin + geolocator konum → animateCamera)
+- [x] `flutter analyze` 0 issue, `flutter test` yeşil (12 test)
 - Commit: `feat: flight map screen`
+- Not: Harita native plugin gerektirir; canlı görsel doğrulama (marker dönüşü, tap, konum) kullanıcı
+  cihazı/emülatöründe yapılmalı. APK derlemesi bu ortamda Gradle loopback kısıtı nedeniyle koşulamadı;
+  Faz 8 CI runner'ında doğrulanacak.
 
 ## Faz 5 — Auth & Firestore
 - [ ] `IAuthRepository` + Firebase impl (register/login/logout)

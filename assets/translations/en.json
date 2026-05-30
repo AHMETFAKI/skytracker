@@ -10,6 +10,29 @@
     "switchToMock": "Switch to mock data",
     "loading": "Loading..."
   },
+  "map": {
+    "title": "Live Flights",
+    "mockBanner": "Showing mock flight data",
+    "fallbackBanner": "OpenSky unavailable — showing mock data",
+    "empty": "No flights in view right now.",
+    "myLocation": "My location",
+    "locationDenied": "Location permission denied.",
+    "locationDisabled": "Location services are off."
+  },
+  "flight": {
+    "callsign": "Callsign",
+    "country": "Origin country",
+    "altitude": "Altitude",
+    "speed": "Speed",
+    "status": "Status",
+    "onGround": "On ground",
+    "airborne": "Airborne",
+    "unknownCallsign": "Unknown"
+  },
+  "units": {
+    "ft": "ft",
+    "kmh": "km/h"
+  },
   "error": {
     "server": "A server error occurred. Please try again.",
     "network": "No internet connection.",

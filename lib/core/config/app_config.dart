@@ -29,6 +29,24 @@ class AppConfig {
       openSkyClientId.isNotEmpty && openSkyClientSecret.isNotEmpty;
   bool get hasMapTilerKey => mapTilerKey.isNotEmpty;
 
+  /// Open style used when no MapTiler key is configured — keeps the map usable
+  /// (graceful degrade) at the cost of the dark radar aesthetic.
+  static const String _fallbackStyleUrl =
+      'https://demotiles.maplibre.org/style.json';
+
+  /// MapTiler dark style (radar look) when a key is present, otherwise the
+  /// open demo style.
+  String get mapStyleUrl => hasMapTilerKey
+      ? 'https://api.maptiler.com/maps/streets-v2-dark/style.json?key=$mapTilerKey'
+      : _fallbackStyleUrl;
+
+  /// How often the map polls for fresh aircraft positions. Kept conservative to
+  /// respect the OpenSky daily credit budget.
+  Duration get refreshInterval {
+    final raw = int.tryParse(dotenv.maybeGet('REFRESH_INTERVAL_SECONDS') ?? '');
+    return Duration(seconds: (raw == null || raw < 10) ? 20 : raw);
+  }
+
   String _env(String key) => dotenv.maybeGet(key) ?? '';
 
   bool _envBool(String key, {required bool defaultValue}) {
