@@ -11,18 +11,22 @@ import 'features/auth/data/auth_session.dart';
 
 /// App entrypoint shared by every flavor.
 ///
-/// Reads the `DATA_SOURCE` flag (`--dart-define=DATA_SOURCE=mock|remote`,
-/// default `mock`) which selects the injectable environment that decides
-/// whether the real OpenSky or the local mock repository is wired up.
+/// Reads the `DATA_SOURCE` flag which selects the injectable environment that
+/// decides whether the real OpenSky or the local mock repository is wired up.
+/// Precedence: `--dart-define=DATA_SOURCE=mock|remote` wins, then the `.env`
+/// value, otherwise `mock` (see [DataSource.resolve]).
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await dotenv.load(isOptional: true);
   await initializeFirebase();
 
-  const dataSourceDefine =
-      String.fromEnvironment('DATA_SOURCE', defaultValue: 'mock');
-  await configureDependencies(DataSource.fromString(dataSourceDefine));
+  const dataSourceDefine = String.fromEnvironment('DATA_SOURCE');
+  final dataSource = DataSource.resolve(
+    define: dataSourceDefine,
+    envValue: dotenv.maybeGet('DATA_SOURCE'),
+  );
+  await configureDependencies(dataSource);
   await enforceRememberMeOnStartup();
 
   runApp(
