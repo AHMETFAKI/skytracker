@@ -18,4 +18,13 @@ enum DataSource {
       _ => DataSource.mock,
     };
   }
+
+  /// Resolves the active source with a clear precedence:
+  /// `--dart-define` wins, then the `.env` value, otherwise [DataSource.mock].
+  /// [define] is the `String.fromEnvironment('DATA_SOURCE')` value (empty when
+  /// the dart-define is absent); [envValue] is `dotenv.maybeGet('DATA_SOURCE')`.
+  static DataSource resolve({required String define, String? envValue}) {
+    final raw = define.trim().isNotEmpty ? define : envValue;
+    return fromString(raw);
+  }
 }

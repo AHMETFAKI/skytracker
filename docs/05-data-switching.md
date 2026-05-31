@@ -26,17 +26,23 @@ class FlightRemoteRepository implements IFlightRepository { ... }
 @LazySingleton(as: IFlightRepository)
 class FlightMockRepository implements IFlightRepository { ... }
 ```
-`bootstrap.dart` ortam değişkenini okur ve DI'yı o ortamla başlatır:
+`bootstrap.dart` ortam değişkenini okur ve DI'yı o ortamla başlatır. Öncelik
+`DataSource.resolve` ile merkezîleştirilir: **`--dart-define` > `.env` > `mock`**.
 ```dart
-const raw = String.fromEnvironment('DATA_SOURCE', defaultValue: 'mock');
-final env = raw == 'remote' ? 'remote' : 'mock';
-await configureDependencies(environment: env);
+const define = String.fromEnvironment('DATA_SOURCE'); // tanımsızsa ''
+final dataSource = DataSource.resolve(
+  define: define,
+  envValue: dotenv.maybeGet('DATA_SOURCE'),
+);
+await configureDependencies(dataSource);
 ```
 > **Tek komutla geçiş:**
 > - Mock: `flutter run --dart-define=DATA_SOURCE=mock` (varsayılan)
 > - Gerçek: `flutter run --dart-define=DATA_SOURCE=remote`
 
-`.env` içindeki `DATA_SOURCE` de okunabilir; `--dart-define` önceliklidir (CI/flavor dostu).
+`--dart-define` verilmediğinde `.env` içindeki `DATA_SOURCE` **fallback** olarak kullanılır;
+ikisi de yoksa `mock`. `--dart-define` her zaman önceliklidir (CI/flavor dostu). Aynı `resolve`
+mantığı `AppConfig.dataSource` getter'ında da kullanılır → DI ortamı ile runtime görünümü daima uyumludur.
 
 ## Fallback (hata toleransı — artı puan)
 Remote repo `AuthFailure` (401) veya `RateLimitFailure` (429) döndürdüğünde:

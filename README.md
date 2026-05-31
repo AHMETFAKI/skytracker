@@ -59,7 +59,7 @@ dart run build_runner watch --delete-conflicting-outputs   # geliştirirken
 ## Test & CI
 ```bash
 flutter analyze   # 0 issue
-flutter test      # 39 test
+flutter test      # 51 test
 ```
 Her push/PR'da [GitHub Actions](.github/workflows/ci.yml) çalışır: `pub get` → `build_runner`
 → `analyze` → `test` → `flutter build apk --debug`. Debug APK, mock-first konfigürasyonda

@@ -10,11 +10,13 @@ import 'data_source.dart';
 class AppConfig {
   const AppConfig();
 
-  static const String _dataSourceDefine =
-      String.fromEnvironment('DATA_SOURCE', defaultValue: 'mock');
-
-  /// Active flight data source, chosen at launch.
-  DataSource get dataSource => DataSource.fromString(_dataSourceDefine);
+  /// Active flight data source, chosen at launch. Mirrors the precedence used
+  /// in `bootstrap.dart` (dart-define > `.env` > mock) so the runtime view and
+  /// the DI-wired repository always agree.
+  DataSource get dataSource => DataSource.resolve(
+        define: const String.fromEnvironment('DATA_SOURCE'),
+        envValue: dotenv.maybeGet('DATA_SOURCE'),
+      );
 
   /// When true, a remote auth/rate-limit failure auto-falls back to mock data
   /// instead of only surfacing a "switch to mock" action.
