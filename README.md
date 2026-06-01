@@ -5,8 +5,8 @@
 Gerçek zamanlı uçuş verilerini ([OpenSky Network](https://opensky-network.org)) bir MapLibre
 haritası üzerinde takip eden Flutter uygulaması. PITON Technology Study Case projesi.
 
-> **Durum:** Tamamlandı — tüm fazlar için [`docs/00-roadmap.md`](docs/00-roadmap.md).
-> Her faz ayrı conventional commit ile push edilmiştir.
+> **Durum:** Tamamlandı. Mimari ve teknik karar gerekçeleri için [`docs/`](docs/README.md).
+> Geliştirme conventional commit'lerle yürütülmüştür.
 
 ## Özellikler
 - 🗺️ MapLibre GL haritada uçaklar (GeoJSON Symbol Layer, `true_track` ile dönen ikonlar)
