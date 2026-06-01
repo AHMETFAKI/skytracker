@@ -17,21 +17,37 @@
     "empty": "Şu anda görünümde uçuş yok.",
     "myLocation": "Konumum",
     "locationDenied": "Konum izni reddedildi.",
-    "locationDisabled": "Konum servisleri kapalı."
+    "locationDisabled": "Konum servisleri kapalı.",
+    "aircraftCount": "{} uçak",
+    "justNow": "az önce",
+    "secondsAgo": "{} sn önce",
+    "minutesAgo": "{} dk önce",
+    "legend": {
+      "ground": "Yerde",
+      "low": "Alçak",
+      "cruise": "Seyir",
+      "high": "Yüksek"
+    }
   },
   "flight": {
     "callsign": "Çağrı kodu",
     "country": "Menşe ülke",
     "altitude": "İrtifa",
     "speed": "Hız",
+    "heading": "Rota",
     "status": "Durum",
     "onGround": "Yerde",
     "airborne": "Havada",
+    "climbing": "Tırmanış",
+    "descending": "Alçalış",
+    "level": "Seyir",
     "unknownCallsign": "Bilinmiyor"
   },
   "units": {
     "ft": "ft",
-    "kmh": "km/h"
+    "kmh": "km/h",
+    "fpm": "ft/dk",
+    "degree": "°"
   },
   "shell": {
     "tab": {

@@ -12,11 +12,12 @@ import '../../domain/repositories/i_flight_repository.dart';
 
 /// Immutable view the map screen renders.
 class FlightsView {
-  const FlightsView({
+  FlightsView({
     required this.flights,
     required this.source,
     required this.isMockFallback,
-  });
+    DateTime? updatedAt,
+  }) : updatedAt = updatedAt ?? DateTime.now();
 
   final List<FlightEntity> flights;
 
@@ -25,6 +26,10 @@ class FlightsView {
 
   /// True when the remote source failed and we silently fell back to mock.
   final bool isMockFallback;
+
+  /// Wall-clock time this snapshot was produced, used by the map HUD to show
+  /// how stale the on-screen positions are.
+  final DateTime updatedAt;
 }
 
 /// Loads aircraft states and refreshes them on a timer. Handles the

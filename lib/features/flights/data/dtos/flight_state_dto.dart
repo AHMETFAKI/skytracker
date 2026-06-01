@@ -17,6 +17,7 @@ class FlightStateDto {
     this.baroAltitude,
     this.velocity,
     this.trueTrack,
+    this.verticalRate,
     this.geoAltitude,
   });
 
@@ -29,6 +30,7 @@ class FlightStateDto {
   final bool onGround;
   final double? velocity;
   final double? trueTrack;
+  final double? verticalRate;
   final double? geoAltitude;
 
   /// Parses one positional state vector. Out-of-range or wrongly-typed cells
@@ -47,6 +49,7 @@ class FlightStateDto {
       onGround: _bool(v, 8),
       velocity: _double(v, 9),
       trueTrack: _double(v, 10),
+      verticalRate: _double(v, 11),
       geoAltitude: _double(v, 13),
     );
   }
@@ -69,6 +72,7 @@ class FlightStateDto {
       geoAltitude: geoAltitude,
       velocity: velocity,
       trueTrack: trueTrack,
+      verticalRate: verticalRate,
     );
   }
 

@@ -74,6 +74,23 @@ abstract final class AppTheme {
         contentTextStyle: TextStyle(color: AppColors.onSurface),
         behavior: SnackBarBehavior.floating,
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.surface,
+        indicatorColor: AppColors.primary.withValues(alpha: 0.18),
+        elevation: 0,
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? AppTextStyles.labelSmall.copyWith(color: AppColors.primary)
+              : AppTextStyles.labelSmall,
+        ),
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected)
+                ? AppColors.primary
+                : AppColors.onSurfaceMuted,
+          ),
+        ),
+      ),
       dividerColor: AppColors.outline,
     );
   }
