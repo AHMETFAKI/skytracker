@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,6 +30,8 @@ class LoginPage extends HookConsumerWidget {
 
     Future<void> submit() async {
       if (!(formKey.currentState?.validate() ?? false)) return;
+      await HapticFeedback.lightImpact();
+      if (!context.mounted) return;
       FocusScope.of(context).unfocus();
       final ok = await ref.read(authControllerProvider.notifier).login(
             email: emailController.text.trim(),
@@ -58,7 +61,7 @@ class LoginPage extends HookConsumerWidget {
                     child: LanguageToggle(),
                   ),
                   SizedBox(height: 8.h),
-                  Icon(Icons.radar, size: 64.sp, color: AppColors.primary),
+                  const Center(child: _RadarBadge()),
                   SizedBox(height: 16.h),
                   Text(
                     'auth.login.title'.tr(),
@@ -114,6 +117,38 @@ class LoginPage extends HookConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Brand mark: the radar glyph in a softly glowing turquoise halo, reusing the
+/// app's radar gradient.
+class _RadarBadge extends StatelessWidget {
+  const _RadarBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 96.w,
+      height: 96.w,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: const RadialGradient(
+          colors: [
+            Color(0xFF0B2530),
+            AppColors.background,
+          ],
+        ),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.4)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.25),
+            blurRadius: 24,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: Icon(Icons.radar, size: 48.sp, color: AppColors.primary),
     );
   }
 }

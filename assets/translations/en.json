@@ -17,21 +17,37 @@
     "empty": "No flights in view right now.",
     "myLocation": "My location",
     "locationDenied": "Location permission denied.",
-    "locationDisabled": "Location services are off."
+    "locationDisabled": "Location services are off.",
+    "aircraftCount": "{} aircraft",
+    "justNow": "just now",
+    "secondsAgo": "{}s ago",
+    "minutesAgo": "{}m ago",
+    "legend": {
+      "ground": "Ground",
+      "low": "Low",
+      "cruise": "Cruise",
+      "high": "High"
+    }
   },
   "flight": {
     "callsign": "Callsign",
     "country": "Origin country",
     "altitude": "Altitude",
     "speed": "Speed",
+    "heading": "Heading",
     "status": "Status",
     "onGround": "On ground",
     "airborne": "Airborne",
+    "climbing": "Climbing",
+    "descending": "Descending",
+    "level": "Level",
     "unknownCallsign": "Unknown"
   },
   "units": {
     "ft": "ft",
-    "kmh": "km/h"
+    "kmh": "km/h",
+    "fpm": "ft/min",
+    "degree": "°"
   },
   "shell": {
     "tab": {

@@ -3,25 +3,22 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_colors.dart';
-
 /// Renders the aircraft marker to PNG bytes at runtime so the app ships no
 /// binary icon asset. The shape points north (up) at 0°, so the symbol layer's
 /// `iconRotate = ['get','bearing']` aligns it to each flight's true track.
+///
+/// The glyph is drawn as a solid **white** silhouette and registered as an SDF
+/// image (`addImage(..., true)`); that lets the symbol layer recolor each
+/// aircraft per-altitude via an `iconColor` expression and add a contrasting
+/// halo, instead of baking a single color into the bitmap.
 Future<Uint8List> buildPlaneIcon({double size = 48, double scale = 3}) async {
   final dimension = size * scale;
   final recorder = ui.PictureRecorder();
   final canvas = Canvas(recorder);
 
   final fill = Paint()
-    ..color = AppColors.primary
+    ..color = const Color(0xFFFFFFFF)
     ..style = PaintingStyle.fill
-    ..isAntiAlias = true;
-  final stroke = Paint()
-    ..color = AppColors.onPrimary
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = dimension * 0.04
-    ..strokeJoin = StrokeJoin.round
     ..isAntiAlias = true;
 
   // A simple arrow-plane silhouette in a unit square, nose pointing up.
@@ -42,9 +39,7 @@ Future<Uint8List> buildPlaneIcon({double size = 48, double scale = 3}) async {
     ..lineTo(w * 0.38, h * 0.55)
     ..close();
 
-  canvas
-    ..drawPath(path, fill)
-    ..drawPath(path, stroke);
+  canvas.drawPath(path, fill);
 
   final picture = recorder.endRecording();
   final image = await picture.toImage(dimension.toInt(), dimension.toInt());

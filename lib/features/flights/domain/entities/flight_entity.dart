@@ -2,6 +2,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'flight_entity.freezed.dart';
 
+/// Whether an aircraft is climbing, descending, or in level flight.
+enum VerticalTrend { climbing, descending, level }
+
 /// A single aircraft's state, in the app's domain vocabulary. Pure Dart — no
 /// Flutter or transport detail. Built from a [FlightStateDto] via `toEntity()`.
 ///
@@ -22,6 +25,7 @@ sealed class FlightEntity with _$FlightEntity {
     double? geoAltitude,
     double? velocity,
     double? trueTrack,
+    double? verticalRate,
   }) = _FlightEntity;
 
   const FlightEntity._();
@@ -34,5 +38,13 @@ sealed class FlightEntity with _$FlightEntity {
   String? get displayCallsign {
     final c = callsign?.trim();
     return (c == null || c.isEmpty) ? null : c;
+  }
+
+  /// Vertical movement, classified for display. A small deadband around zero
+  /// keeps level flight from flickering between climb/descent.
+  VerticalTrend get verticalTrend {
+    final rate = verticalRate;
+    if (rate == null || rate.abs() < 0.5) return VerticalTrend.level;
+    return rate > 0 ? VerticalTrend.climbing : VerticalTrend.descending;
   }
 }

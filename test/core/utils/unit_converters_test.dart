@@ -26,5 +26,12 @@ void main() {
       expect(UnitConverters.formatKmh(250), '900');
       expect(UnitConverters.formatKmh(null), '—');
     });
+
+    test('formatVerticalRate signs, rounds to 50 ft/min, and dashes null', () {
+      expect(UnitConverters.formatVerticalRate(10), '+1950'); // 1968 → 1950
+      expect(UnitConverters.formatVerticalRate(-10), '-1950');
+      expect(UnitConverters.formatVerticalRate(0), '0');
+      expect(UnitConverters.formatVerticalRate(null), '—');
+    });
   });
 }
