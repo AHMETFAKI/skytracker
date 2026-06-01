@@ -206,64 +206,97 @@ Future<void> _showEditNameSheet(
   BuildContext context,
   WidgetRef ref,
   String current,
-) async {
-  final controller = TextEditingController(text: current);
-  final formKey = GlobalKey<FormState>();
-
-  await showModalBottomSheet<void>(
+) {
+  return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: AppColors.surface,
-    builder: (sheetContext) {
-      return Padding(
-        padding: EdgeInsets.only(
-          left: 24.w,
-          right: 24.w,
-          top: 24.h,
-          bottom: MediaQuery.of(sheetContext).viewInsets.bottom + 24.h,
-        ),
+    builder: (_) => _EditNameSheet(currentName: current),
+  );
+}
+
+/// Edit-name bottom sheet. Owns its [TextEditingController] in state so it is
+/// disposed only after the route is fully gone — disposing it synchronously
+/// after `showModalBottomSheet` returns left the closing animation rebuilding
+/// the field against a dead controller. Scrollable so the keyboard never
+/// overflows the content.
+class _EditNameSheet extends ConsumerStatefulWidget {
+  const _EditNameSheet({required this.currentName});
+
+  final String currentName;
+
+  @override
+  ConsumerState<_EditNameSheet> createState() => _EditNameSheetState();
+}
+
+class _EditNameSheetState extends ConsumerState<_EditNameSheet> {
+  late final TextEditingController _controller =
+      TextEditingController(text: widget.currentName);
+  final _formKey = GlobalKey<FormState>();
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    setState(() => _saving = true);
+    final ok = await ref
+        .read(profileControllerProvider.notifier)
+        .updateFullName(_controller.text.trim());
+    if (!mounted) return;
+    if (ok) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() => _saving = false);
+      showFailureSnackBar(context, ref.read(profileControllerProvider).error);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 24.w,
+        right: 24.w,
+        top: 24.h,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24.h,
+      ),
+      child: SingleChildScrollView(
         child: Form(
-          key: formKey,
+          key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'profile.editName'.tr(),
-                style: Theme.of(sheetContext).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(height: 16.h),
               AppTextField(
                 label: 'auth.field.fullName'.tr(),
-                controller: controller,
+                controller: _controller,
                 prefixIcon: Icons.person_outline,
+                textInputAction: TextInputAction.done,
                 validator: (v) => Validators.fullName(v)?.tr(),
+                onSubmitted: (_) => _save(),
               ),
               SizedBox(height: 24.h),
               AppButton(
                 label: 'common.save'.tr(),
-                onPressed: () async {
-                  if (!(formKey.currentState?.validate() ?? false)) return;
-                  final ok = await ref
-                      .read(profileControllerProvider.notifier)
-                      .updateFullName(controller.text.trim());
-                  if (!sheetContext.mounted) return;
-                  Navigator.of(sheetContext).pop();
-                  if (!ok) {
-                    showFailureSnackBar(
-                      context,
-                      ref.read(profileControllerProvider).error,
-                    );
-                  }
-                },
+                isLoading: _saving,
+                onPressed: _save,
               ),
             ],
           ),
         ),
-      );
-    },
-  );
-  controller.dispose();
+      ),
+    );
+  }
 }
 
 String _formatDate(DateTime? date) {
