@@ -49,6 +49,9 @@ class FlightMapPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Kept alive in the shell's IndexedStack — subscribe to the locale so the
+    // HUD/legend re-localize immediately when the language changes.
+    final _ = context.locale;
     final config = getIt<AppConfig>();
     final controllerRef = useRef<MapLibreMapController?>(null);
     final styleReady = useState(false);
