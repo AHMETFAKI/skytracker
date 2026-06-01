@@ -6,6 +6,7 @@ abstract final class UnitConverters {
   static const double _metersToFeet = 3.28084;
   static const double _mpsToKmh = 3.6;
   static const double _mpsToKnots = 1.94384;
+  static const double _mpsToFeetPerMin = 196.8504; // 3.28084 * 60
 
   /// Meters → feet (altitude readout).
   static double metersToFeet(double meters) => meters * _metersToFeet;
@@ -26,5 +27,14 @@ abstract final class UnitConverters {
   static String formatKmh(double? mps) {
     if (mps == null) return '—';
     return mpsToKmh(mps).round().toString();
+  }
+
+  /// Vertical speed in feet/minute, signed and rounded to the nearest 50,
+  /// e.g. `+1200`, `-800`, `0`.
+  static String formatVerticalRate(double? mps) {
+    if (mps == null) return '—';
+    final fpm = (mps * _mpsToFeetPerMin / 50).round() * 50;
+    if (fpm == 0) return '0';
+    return fpm > 0 ? '+$fpm' : '$fpm';
   }
 }

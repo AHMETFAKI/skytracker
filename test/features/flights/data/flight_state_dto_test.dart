@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:skytracker/features/flights/data/dtos/flight_state_dto.dart';
+import 'package:skytracker/features/flights/domain/entities/flight_entity.dart';
 
 void main() {
   group('FlightStateDto.fromStateVector', () {
@@ -16,7 +17,7 @@ void main() {
         false, // 8 on_ground
         241.32, // 9 velocity
         86.5, // 10 true_track
-        0.0, // 11 vertical_rate
+        -3.25, // 11 vertical_rate
         null, // 12 sensors
         11582.4, // 13 geo_altitude
         '1000', // 14 squawk
@@ -33,6 +34,7 @@ void main() {
       expect(dto.onGround, false);
       expect(dto.velocity, 241.32);
       expect(dto.trueTrack, 86.5);
+      expect(dto.verticalRate, -3.25);
       expect(dto.geoAltitude, 11582.4);
     });
 
@@ -136,6 +138,28 @@ void main() {
       ]);
 
       expect(dto.toEntity()!.altitude, 8000.0);
+    });
+
+    test('classifies vertical trend with a deadband around zero', () {
+      FlightEntity withRate(double? rate) => FlightStateDto.fromStateVector([
+            'abc123',
+            'CALL',
+            'Country',
+            0,
+            0,
+            8.0,
+            47.0,
+            9000.0,
+            false,
+            200.0,
+            90.0,
+            rate,
+          ]).toEntity()!;
+
+      expect(withRate(5.0).verticalTrend, VerticalTrend.climbing);
+      expect(withRate(-5.0).verticalTrend, VerticalTrend.descending);
+      expect(withRate(0.1).verticalTrend, VerticalTrend.level);
+      expect(withRate(null).verticalTrend, VerticalTrend.level);
     });
   });
 }
