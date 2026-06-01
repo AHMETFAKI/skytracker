@@ -5,17 +5,25 @@
 Gerçek zamanlı uçuş verilerini ([OpenSky Network](https://opensky-network.org)) bir MapLibre
 haritası üzerinde takip eden Flutter uygulaması. PITON Technology Study Case projesi.
 
-> **Durum:** Tamamlandı — tüm fazlar için [`docs/00-roadmap.md`](docs/00-roadmap.md).
-> Her faz ayrı conventional commit ile push edilmiştir.
+> **Durum:** Tamamlandı. Mimari ve teknik karar gerekçeleri için [`docs/`](docs/README.md).
+> Geliştirme conventional commit'lerle yürütülmüştür.
 
 ## Özellikler
 - 🗺️ MapLibre GL haritada uçaklar (GeoJSON Symbol Layer, `true_track` ile dönen ikonlar)
-- ℹ️ Uçağa tıkla → bilgi kartı (callsign, ülke, irtifa **ft**, hız **km/h**, yerde/havada)
-- 📍 Cihaz konumuna ortalayan buton
+- ✈️ Yenilemeler arası **akıcı interpolasyon** (uçaklar zıplamadan kayar) + irtifaya göre
+  **renkli ikonlar**, düşük zoom'da **clustering**, seçili uçak için halka + rota çizgisi
+- ℹ️ Uçağa tıkla → bilgi kartı (callsign, ülke, irtifa **ft**, hız **km/h**, dikey hız, yön)
+- 📍 Cihaz konumuna ortalayan buton + canlı sayaç/HUD
 - 🔁 **Mock / Remote** veri kaynağı tek komutla değişir + 401/429'da mock'a fallback
 - 🔐 Firebase Auth (e-posta/şifre) + "Beni Hatırlat" + Firestore profil
 - 🌍 TR / EN lokalizasyon
 - 🧱 Clean Architecture + `Either<Failure,T>` ile merkezî hata yönetimi
+
+## Demo & İndir
+- 📦 **APK** ve 🎬 **demo videosu**: [Releases](https://github.com/AHMETFAKI/skytracker/releases/latest)
+  sayfasından indirilebilir.
+- APK varsayılan olarak **mock-first** çalışır (anahtar gerektirmez); gerçek OpenSky verisi
+  için aşağıdaki `DATA_SOURCE=remote` yapılandırması gerekir.
 
 ## Teknoloji yığını
 Flutter · hooks_riverpod + flutter_hooks · get_it + injectable · auto_route · dio · maplibre_gl ·
