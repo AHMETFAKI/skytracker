@@ -21,6 +21,11 @@ class ProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // This tab is kept alive in the shell's IndexedStack, so reading the locale
+    // here subscribes the page to easy_localization and re-localizes it the
+    // moment the language changes — `.tr()` alone does not establish that
+    // dependency.
+    final _ = context.locale;
     final signedIn = ref.watch(authStateProvider).value != null;
 
     return Scaffold(
@@ -61,7 +66,9 @@ class _ProfileContent extends ConsumerWidget {
   Future<void> _logout(BuildContext context, WidgetRef ref) async {
     await ref.read(authControllerProvider.notifier).logout();
     if (!context.mounted) return;
-    await context.router.replaceAll([const LoginRoute()]);
+    // Profile is a nested tab, so `context.router` is the inner TabsRouter;
+    // LoginRoute lives on the root stack, hence `.root`.
+    await context.router.root.replaceAll([const LoginRoute()]);
   }
 
   @override
