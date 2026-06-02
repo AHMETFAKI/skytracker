@@ -24,6 +24,7 @@ import '../map/flight_palette.dart';
 import '../map/plane_icon.dart';
 import '../providers/flights_provider.dart';
 import '../widgets/flight_info_sheet.dart';
+import '../widgets/flight_search_sheet.dart';
 
 const _sourceId = 'flights';
 const _symbolLayer = 'flights-symbols';
@@ -177,6 +178,25 @@ class FlightMapPage extends HookConsumerWidget {
       await pushFrame(tRef.value);
     }
 
+    Future<void> openSearch(BuildContext context) async {
+      final controller = controllerRef.value;
+      if (controller == null) return;
+      final flight = await FlightSearchSheet.show(context);
+      if (flight == null || !context.mounted) return;
+      selected.value = flight.icao24;
+      await controller.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          LatLng(flight.latitude, flight.longitude),
+          7,
+        ),
+      );
+      await pushFrame(tRef.value);
+      if (!context.mounted) return;
+      await FlightInfoSheet.show(context, flight);
+      selected.value = null;
+      await pushFrame(tRef.value);
+    }
+
     void onMapCreated(MapLibreMapController controller) {
       controllerRef.value = controller;
       controller.onFeatureTapped.add((point, latLng, id, layerId, _) {
@@ -218,6 +238,18 @@ class FlightMapPage extends HookConsumerWidget {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          FloatingActionButton(
+            heroTag: 'fab-search',
+            backgroundColor: AppColors.surfaceVariant,
+            foregroundColor: AppColors.primary,
+            tooltip: 'map.search'.tr(),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              openSearch(context);
+            },
+            child: const Icon(Icons.search),
+          ),
+          SizedBox(height: 12.h),
           _RefreshButton(
             isRefreshing: flightsAsync.isLoading && flightsAsync.hasValue,
             onPressed: () {
