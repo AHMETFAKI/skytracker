@@ -10,6 +10,9 @@ import 'data_source.dart';
 class AppConfig {
   const AppConfig();
 
+  /// Human-readable app version shown in the UI (mirrors `pubspec.yaml`).
+  static const String appVersion = '1.0.0';
+
   /// Active flight data source, chosen at launch. Mirrors the precedence used
   /// in `bootstrap.dart` (dart-define > `.env` > mock) so the runtime view and
   /// the DI-wired repository always agree.
