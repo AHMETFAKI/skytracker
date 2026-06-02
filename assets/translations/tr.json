@@ -45,9 +45,20 @@
   },
   "units": {
     "ft": "ft",
+    "m": "m",
     "kmh": "km/h",
+    "kn": "knot",
+    "mph": "mph",
     "fpm": "ft/dk",
     "degree": "°"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "altitudeUnit": "İrtifa birimi",
+    "speedUnit": "Hız birimi",
+    "refreshInterval": "Yenileme aralığı",
+    "refreshSeconds": "{} sn",
+    "note": "Birim ve yenileme tercihleri haritaya ve uçuş bilgi kartına anında uygulanır."
   },
   "shell": {
     "tab": {
@@ -63,7 +74,10 @@
     "editName": "Adı düzenle",
     "logout": "Çıkış yap",
     "signedOut": "Profilini görmek için giriş yap.",
-    "language": "Dil"
+    "language": "Dil",
+    "preferences": "Tercihler",
+    "account": "Hesap",
+    "settings": "Ayarlar"
   },
   "auth": {
     "login": {

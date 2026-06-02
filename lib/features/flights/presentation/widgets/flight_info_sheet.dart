@@ -3,10 +3,12 @@ import 'dart:math' as math;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/unit_converters.dart';
+import '../../../settings/presentation/providers/settings_provider.dart';
 import '../../domain/entities/flight_entity.dart';
 import '../map/flight_palette.dart';
 
@@ -14,7 +16,7 @@ import '../map/flight_palette.dart';
 /// from SI to aviation units (ft / km-h / ft-min) and laid out as a compact
 /// instrument cluster: altitude, ground speed, vertical trend, and a heading
 /// compass.
-class FlightInfoSheet extends StatelessWidget {
+class FlightInfoSheet extends ConsumerWidget {
   const FlightInfoSheet({required this.flight, super.key});
 
   final FlightEntity flight;
@@ -29,7 +31,8 @@ class FlightInfoSheet extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsControllerProvider);
     final callsign = flight.displayCallsign ?? 'flight.unknownCallsign'.tr();
     final accent = FlightPalette.colorFor(
       altitudeMeters: flight.altitude,
@@ -102,8 +105,8 @@ class FlightInfoSheet extends StatelessWidget {
                   child: _StatTile(
                     icon: Icons.height,
                     label: 'flight.altitude'.tr(),
-                    value: UnitConverters.formatFeet(flight.altitude),
-                    unit: 'units.ft'.tr(),
+                    value: settings.altitudeUnit.format(flight.altitude),
+                    unit: settings.altitudeUnit.labelKey.tr(),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -111,8 +114,8 @@ class FlightInfoSheet extends StatelessWidget {
                   child: _StatTile(
                     icon: Icons.speed,
                     label: 'flight.speed'.tr(),
-                    value: UnitConverters.formatKmh(flight.velocity),
-                    unit: 'units.kmh'.tr(),
+                    value: settings.speedUnit.format(flight.velocity),
+                    unit: settings.speedUnit.labelKey.tr(),
                   ),
                 ),
               ],
