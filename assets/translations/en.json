@@ -45,9 +45,20 @@
   },
   "units": {
     "ft": "ft",
+    "m": "m",
     "kmh": "km/h",
+    "kn": "kn",
+    "mph": "mph",
     "fpm": "ft/min",
     "degree": "°"
+  },
+  "settings": {
+    "title": "Settings",
+    "altitudeUnit": "Altitude unit",
+    "speedUnit": "Speed unit",
+    "refreshInterval": "Refresh interval",
+    "refreshSeconds": "{}s",
+    "note": "Unit and refresh preferences apply instantly to the map and the flight info card."
   },
   "shell": {
     "tab": {
@@ -63,7 +74,10 @@
     "editName": "Edit name",
     "logout": "Sign out",
     "signedOut": "Sign in to view your profile.",
-    "language": "Language"
+    "language": "Language",
+    "preferences": "Preferences",
+    "account": "Account",
+    "settings": "Settings"
   },
   "auth": {
     "login": {

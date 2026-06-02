@@ -6,6 +6,7 @@ import '../../../../core/config/app_config.dart';
 import '../../../../core/config/data_source.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/error/failure.dart';
+import '../../../settings/presentation/providers/settings_provider.dart';
 import '../../data/repositories/flight_mock_repository.dart';
 import '../../domain/entities/flight_entity.dart';
 import '../../domain/repositories/i_flight_repository.dart';
@@ -46,7 +47,12 @@ class FlightsController extends AsyncNotifier<FlightsView> {
     _config = getIt<AppConfig>();
     _primary = getIt<IFlightRepository>();
 
-    _timer = Timer.periodic(_config.refreshInterval, (_) => _tick());
+    // Poll on the user-selected interval; changing it re-runs build, which
+    // cancels the old timer (via onDispose) and starts a fresh one.
+    final interval = ref.watch(
+      settingsControllerProvider.select((s) => s.refreshInterval),
+    );
+    _timer = Timer.periodic(interval, (_) => _tick());
     ref.onDispose(() => _timer?.cancel());
 
     return _load();

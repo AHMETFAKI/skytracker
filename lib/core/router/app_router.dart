@@ -5,6 +5,7 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/flights/presentation/pages/flight_map_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../features/shell/presentation/pages/home_shell_page.dart';
 import 'auth_guard.dart';
 
@@ -28,5 +29,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(page: LoginRoute.page),
         AutoRoute(page: RegisterRoute.page),
+        AutoRoute(page: SettingsRoute.page),
       ];
 }

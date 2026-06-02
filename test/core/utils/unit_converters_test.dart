@@ -27,6 +27,15 @@ void main() {
       expect(UnitConverters.formatKmh(null), '—');
     });
 
+    test('formatMeters / formatKnots / formatMph round and dash null', () {
+      expect(UnitConverters.formatMeters(10668), '10668');
+      expect(UnitConverters.formatMeters(null), '—');
+      expect(UnitConverters.formatKnots(100), '194'); // 100 * 1.94384
+      expect(UnitConverters.formatKnots(null), '—');
+      expect(UnitConverters.formatMph(100), '224'); // 100 * 2.23694
+      expect(UnitConverters.formatMph(null), '—');
+    });
+
     test('formatVerticalRate signs, rounds to 50 ft/min, and dashes null', () {
       expect(UnitConverters.formatVerticalRate(10), '+1950'); // 1968 → 1950
       expect(UnitConverters.formatVerticalRate(-10), '-1950');

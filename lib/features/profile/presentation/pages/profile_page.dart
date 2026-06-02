@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/config/app_config.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../auth/domain/entities/app_user.dart';
@@ -74,16 +77,43 @@ class _ProfileContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView(
-      padding: EdgeInsets.all(24.w),
+      padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 32.h),
       children: [
-        Center(
-          child: CircleAvatar(
-            radius: 40.r,
-            backgroundColor: AppColors.surfaceVariant,
-            child: Icon(Icons.person, size: 40.sp, color: AppColors.primary),
+        _ProfileHeader(user: user),
+        SizedBox(height: 28.h),
+        _SectionLabel('profile.preferences'.tr()),
+        SizedBox(height: 8.h),
+        GlassCard(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: Row(
+                  children: [
+                    Icon(Icons.language,
+                        size: 20.sp, color: AppColors.onSurfaceMuted),
+                    SizedBox(width: 12.w),
+                    Expanded(child: Text('profile.language'.tr())),
+                    const LanguageToggle(),
+                  ],
+                ),
+              ),
+              Divider(color: AppColors.outline, height: 1.h),
+              _NavRow(
+                icon: Icons.tune,
+                label: 'profile.settings'.tr(),
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  context.router.push(const SettingsRoute());
+                },
+              ),
+            ],
           ),
         ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 20.h),
+        _SectionLabel('profile.account'.tr()),
+        SizedBox(height: 8.h),
         GlassCard(
           child: Column(
             children: [
@@ -107,18 +137,7 @@ class _ProfileContent extends ConsumerWidget {
             ],
           ),
         ),
-        SizedBox(height: 16.h),
-        GlassCard(
-          child: Row(
-            children: [
-              Icon(Icons.language, size: 20.sp, color: AppColors.onSurfaceMuted),
-              SizedBox(width: 12.w),
-              Expanded(child: Text('profile.language'.tr())),
-              const LanguageToggle(),
-            ],
-          ),
-        ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 28.h),
         AppButton(
           label: 'profile.editName'.tr(),
           icon: Icons.edit_outlined,
@@ -135,7 +154,126 @@ class _ProfileContent extends ConsumerWidget {
             padding: EdgeInsets.symmetric(vertical: 14.h),
           ),
         ),
+        SizedBox(height: 24.h),
+        Center(
+          child: Text(
+            'SkyTracker v${AppConfig.appVersion}',
+            style: AppTextStyles.labelSmall,
+          ),
+        ),
       ],
+    );
+  }
+}
+
+/// Avatar (user initials on a brand gradient) + name + email.
+class _ProfileHeader extends StatelessWidget {
+  const _ProfileHeader({required this.user});
+
+  final AppUser user;
+
+  String get _initials {
+    final name = user.fullName.trim();
+    if (name.isNotEmpty) {
+      final parts = name.split(RegExp(r'\s+'));
+      final letters = parts.take(2).map((p) => p[0]).join();
+      return letters.toUpperCase();
+    }
+    final email = user.email.trim();
+    return email.isEmpty ? '?' : email[0].toUpperCase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 88.w,
+          height: 88.w,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [AppColors.primary, AppColors.accent],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.3),
+                blurRadius: 20,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            _initials,
+            style: AppTextStyles.displayLarge.copyWith(
+              color: AppColors.onPrimary,
+              fontSize: 32.sp,
+            ),
+          ),
+        ),
+        SizedBox(height: 14.h),
+        Text(
+          user.fullName.isEmpty ? user.email : user.fullName,
+          style: AppTextStyles.titleLarge,
+          textAlign: TextAlign.center,
+        ),
+        if (user.fullName.isNotEmpty) ...[
+          SizedBox(height: 2.h),
+          Text(user.email, style: AppTextStyles.bodyMuted),
+        ],
+      ],
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 4.w),
+      child: Text(
+        text.toUpperCase(),
+        style: AppTextStyles.labelSmall.copyWith(letterSpacing: 1),
+      ),
+    );
+  }
+}
+
+/// A tappable settings/navigation row with a trailing chevron.
+class _NavRow extends StatelessWidget {
+  const _NavRow({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 12.h),
+        child: Row(
+          children: [
+            Icon(icon, size: 20.sp, color: AppColors.onSurfaceMuted),
+            SizedBox(width: 12.w),
+            Expanded(child: Text(label)),
+            Icon(Icons.chevron_right,
+                size: 20.sp, color: AppColors.onSurfaceMuted),
+          ],
+        ),
+      ),
     );
   }
 }
