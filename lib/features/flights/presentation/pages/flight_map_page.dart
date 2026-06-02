@@ -547,6 +547,7 @@ class _AltitudeLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _ = context.locale;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

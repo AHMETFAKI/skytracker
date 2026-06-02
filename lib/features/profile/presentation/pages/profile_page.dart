@@ -34,9 +34,7 @@ class ProfilePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text('profile.title'.tr())),
       body: SafeArea(
-        child: signedIn
-            ? const _ProfileBody()
-            : const _SignedOutView(),
+        child: signedIn ? const _ProfileBody() : const _SignedOutView(),
       ),
     );
   }
@@ -47,6 +45,9 @@ class _ProfileBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Subscribe to the locale so this (const) subtree re-localizes when the
+    // language changes — `.tr()` alone establishes no such dependency.
+    final _ = context.locale;
     final profileAsync = ref.watch(profileControllerProvider);
 
     return profileAsync.when(
@@ -321,6 +322,7 @@ class _SignedOutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _ = context.locale;
     return Center(
       child: Padding(
         padding: EdgeInsets.all(24.w),

@@ -13,6 +13,9 @@ class HomeShellPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Subscribe to the locale so the bottom-nav labels re-localize on a
+    // language change (the shell is built once and would otherwise stay stale).
+    final _ = context.locale;
     return AutoTabsScaffold(
       routes: const [FlightMapRoute(), ProfileRoute()],
       transitionBuilder: (context, child, animation) => FadeTransition(
