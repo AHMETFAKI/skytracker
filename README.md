@@ -1,96 +1,121 @@
-# SkyTracker ✈️
+# SkyTracker
 
 [![CI](https://github.com/AHMETFAKI/skytracker/actions/workflows/ci.yml/badge.svg)](https://github.com/AHMETFAKI/skytracker/actions/workflows/ci.yml)
 
-Gerçek zamanlı uçuş verilerini ([OpenSky Network](https://opensky-network.org)) bir MapLibre
-haritası üzerinde takip eden Flutter uygulaması. PITON Technology Study Case projesi.
+OpenSky Network'ün canlı uçuş verisini MapLibre haritası üzerinde gösteren bir
+Flutter uygulaması. PITON Technology study case'i olarak yazıldı.
 
-> **Durum:** Tamamlandı. Mimari ve teknik karar gerekçeleri için [`docs/`](docs/README.md).
-> Geliştirme conventional commit'lerle yürütülmüştür.
+Uçaklar haritada gerçek yönlerine (`true_track`) dönmüş ikonlarla görünür ve
+veri yenilemeleri arasında kayarak hareket eder. Bir uçağa dokununca callsign,
+menşe ülke, irtifa, hız, dikey hız ve yön bilgisini gösteren bir kart açılır.
+Giriş/kayıt Firebase Auth ile, profil Firestore'da tutulur. Tek bir bayrakla
+uygulama mock veri ile gerçek API arasında geçer.
 
-## Özellikler
-- 🗺️ MapLibre GL haritada uçaklar (GeoJSON Symbol Layer, `true_track` ile dönen ikonlar)
-- ✈️ Yenilemeler arası **akıcı interpolasyon** (uçaklar zıplamadan kayar) + irtifaya göre
-  **renkli ikonlar**, düşük zoom'da **clustering**, seçili uçak için halka + rota çizgisi
-- ℹ️ Uçağa tıkla → bilgi kartı (callsign, ülke, irtifa **ft**, hız **km/h**, dikey hız, yön)
-- 📍 Cihaz konumuna ortalayan buton + canlı sayaç/HUD
-- 🔁 **Mock / Remote** veri kaynağı tek komutla değişir + 401/429'da mock'a fallback
-- 🔐 Firebase Auth (e-posta/şifre) + "Beni Hatırlat" + Firestore profil
-- 🌍 TR / EN lokalizasyon
-- 🧱 Clean Architecture + `Either<Failure,T>` ile merkezî hata yönetimi
+Kurulabilir APK ve kısa demo videosu:
+[Releases](https://github.com/AHMETFAKI/skytracker/releases/latest).
 
-## Demo & İndir
-- 📦 **APK** ve 🎬 **demo videosu**: [Releases](https://github.com/AHMETFAKI/skytracker/releases/latest)
-  sayfasından indirilebilir.
-- APK varsayılan olarak **mock-first** çalışır (anahtar gerektirmez); gerçek OpenSky verisi
-  için aşağıdaki `DATA_SOURCE=remote` yapılandırması gerekir.
+## Öne çıkanlar
 
-## Teknoloji yığını
-Flutter · hooks_riverpod + flutter_hooks · get_it + injectable · auto_route · dio · maplibre_gl ·
-Firebase (Auth + Firestore) · freezed + json_serializable · fpdart · easy_localization ·
-flutter_screenutil. Gerekçeler: [`docs/03-tech-stack.md`](docs/03-tech-stack.md).
+- Harita: GeoJSON kaynağı + Symbol Layer, irtifaya göre renklenen ikonlar,
+  düşük zoom'da kümeleme, seçili uçak için halka ve rota çizgisi.
+- Mock / Remote veri kaynağı; remote 401/429 dönerse otomatik mock'a düşer.
+- Firebase Auth (e-posta/şifre, "beni hatırla") ve Firestore profil.
+- Birim ve yenileme aralığı ayarları, TR/EN dil desteği.
+- Clean Architecture, hata akışı `Either<Failure, T>` üzerinden.
+
+## Gereksinimler
+
+- Flutter (stable) / Dart 3.11+. Proje Flutter 3.41 ile geliştirildi.
+- Android tarafında JDK 21 — `maplibre_gl` native kaynaklarını 21 ile derliyor.
+- Çalıştırmak için anahtar gerekmez; uygulama varsayılan olarak repodaki mock
+  veriyle açılır.
 
 ## Kurulum
+
 ```bash
-# 1) Bağımlılıklar
 flutter pub get
-
-# 2) Kod üretimi (freezed / json / injectable / auto_route)
 dart run build_runner build --delete-conflicting-outputs
-
-# 3) Ortam dosyası
-cp .env.example .env   # OpenSky & MapTiler anahtarlarını doldur (mock mod için gerekmez)
-
-# 4) Firebase (gerçek auth için)
-flutterfire configure  # lib/firebase_options.dart üretir (gitignore)
 ```
+
+build_runner; freezed, json_serializable, injectable ve auto_route çıktılarını
+üretir. Bu üretilen dosyalar (`*.g.dart`, `*.freezed.dart`, `*.gr.dart`,
+`*.config.dart`) repoya commit edilmez; her klonda ve CI'da yeniden üretilir.
+Yeni bir model, route ya da injectable ekleyince komutu tekrar çalıştırın, ya da
+geliştirirken `dart run build_runner watch --delete-conflicting-outputs` açık
+bırakın.
+
+### .env
+
+Repoda `.env` yok; gerçek anahtarlar paylaşılmıyor. Şablondan kopyalayın:
+
+```bash
+cp .env.example .env
+```
+
+Mock modda `.env`'i boş bırakabilirsiniz. Gerçek veri ve MapTiler'ın koyu harita
+stili için içindeki anahtarları doldurun:
+
+- `OPENSKY_CLIENT_ID` / `OPENSKY_CLIENT_SECRET` — opensky-network.org üzerinden
+  ücretsiz hesap (OAuth2 client credentials).
+- `MAPTILER_KEY` — maptiler.com. Boş kalırsa açık demo stiline düşülür; harita
+  yine çalışır, sadece koyu radar görünümü gitmiş olur.
+
+### Firebase (giriş için, opsiyonel)
+
+Giriş/kayıt ve profil Firebase'e bağlı, yapılandırması da repoda yok:
+
+```bash
+flutterfire configure
+```
+
+Bu komut `lib/firebase_options.dart` ve `android/app/google-services.json`
+dosyalarını üretir (ikisi de gitignore'lu). Bu dosyalar yoksa uygulama çökmez:
+Firebase'i atlar, harita mock veriyle çalışmaya devam eder, sadece auth ve
+profil devre dışı kalır. Firestore şeması ve güvenlik kuralları için
+[FIREBASE_README.md](FIREBASE_README.md).
 
 ## Çalıştırma
+
 ```bash
-# Mock veri (anahtarsız, varsayılan)
-flutter run --dart-define=DATA_SOURCE=mock
-
-# Gerçek OpenSky verisi (.env anahtarları gerekir)
-flutter run --dart-define=DATA_SOURCE=remote
+flutter run                                   # varsayılan: mock
+flutter run --dart-define=DATA_SOURCE=remote  # gerçek OpenSky verisi (.env gerekir)
 ```
-Tek satırlık `DATA_SOURCE` bayrağı tüm uygulamayı mock/remote arasında çevirir
-(bkz. [`docs/05-data-switching.md`](docs/05-data-switching.md)).
 
-## build_runner komutları
+Kaynak seçimi tek yerden belirlenir: `--dart-define=DATA_SOURCE` >
+`.env`'deki `DATA_SOURCE` > `mock`. injectable bu değere göre başlangıçta mock
+veya remote repository'yi bağlar. Ayrıntı: [docs/05-data-switching.md](docs/05-data-switching.md).
+
+## Test
+
 ```bash
-dart run build_runner build --delete-conflicting-outputs   # tek seferlik
-dart run build_runner watch --delete-conflicting-outputs   # geliştirirken
+flutter analyze   # uyarısız
+flutter test      # 57 test
 ```
-> Üretilen dosyalar (`*.g.dart`, `*.freezed.dart`, `*.gr.dart`, `*.config.dart`) repoya
-> commit **edilmez**; lokalde ve CI'da üretilir.
 
-## Test & CI
-```bash
-flutter analyze   # 0 issue
-flutter test      # 51 test
-```
-Her push/PR'da [GitHub Actions](.github/workflows/ci.yml) çalışır: `pub get` → `build_runner`
-→ `analyze` → `test` → `flutter build apk --debug`. Debug APK, mock-first konfigürasyonda
-secret olmadan derlenir (koşullu `google-services` eklentisi). Detay:
-[`docs/11-ci-cd.md`](docs/11-ci-cd.md).
+## CI ve APK
 
-## APK
+Her push ve PR'da GitHub Actions çalışır: `pub get` → `build_runner` →
+`analyze` → `test` → `flutter build apk --debug`. Debug APK secret olmadan,
+mock-first derlenir; `google-services` eklentisi yalnızca dosya mevcutsa
+devreye girer. Ayrıntı: [docs/11-ci-cd.md](docs/11-ci-cd.md).
+
+Release paketi:
+
 ```bash
 flutter build apk --release   # build/app/outputs/flutter-apk/app-release.apk
 ```
-APK çıktıları (`*.apk`, `*.aab`) repoya commit edilmez (gitignore); teslim APK'sı CI
-artifact'ı veya GitHub Release olarak paylaşılır.
 
-## Mimari kararların gerekçeleri
-- **Clean Architecture (Data/Domain/Presentation):** test edilebilirlik ve katman izolasyonu;
-  Domain saf Dart. Detay: [`docs/02-architecture.md`](docs/02-architecture.md).
-- **fpdart `Either<Failure,T>`:** hatalar tip düzeyinde taşınır, çağıran ele almaya zorlanır.
-- **injectable `@Environment`:** mock/remote repository seçimi başlangıçta çözülür → tek komutla geçiş.
-- **GeoJSON + Symbol Layer:** binlerce uçak için performanslı tek-katman çizim.
+APK ve AAB repoya konmaz. Kurulabilir paket ve demo videosu Releases sayfasında.
 
-## Dokümantasyon
-- Tüm planlama/karar dokümanları: [`docs/`](docs/README.md)
-- Firebase yapılandırması & Security Rules: [`FIREBASE_README.md`](FIREBASE_README.md)
+## Mimari
+
+Katmanlar data / domain / presentation olarak ayrılmış; domain saf Dart, Flutter
+ya da transport detayına bağımlı değil. Veri akışı `Either<Failure, T>` ile
+sarılı, böylece hatalar tip seviyesinde taşınır ve çağıran tarafı ele almaya
+zorlanır. Uçaklar tek bir GeoJSON kaynağı ve Symbol Layer ile çizilir; binlerce
+nokta tek katmanda kalır. Karar gerekçelerinin tamamı [docs/](docs/README.md)
+altında.
 
 ## Lisans
-Bu depo bir işe alım study case'i olarak hazırlanmıştır.
+
+Bu repo bir işe alım study case'i olarak hazırlanmıştır.
