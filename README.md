@@ -77,13 +77,22 @@ profil devre dışı kalır. Firestore şeması ve güvenlik kuralları için
 ## Çalıştırma
 
 ```bash
-flutter run                                   # varsayılan: mock
-flutter run --dart-define=DATA_SOURCE=remote  # gerçek OpenSky verisi (.env gerekir)
+flutter run   # kaynak: .env'deki DATA_SOURCE (yoksa mock)
 ```
 
-Kaynak seçimi tek yerden belirlenir: `--dart-define=DATA_SOURCE` >
-`.env`'deki `DATA_SOURCE` > `mock`. injectable bu değere göre başlangıçta mock
-veya remote repository'yi bağlar. Ayrıntı: [docs/05-data-switching.md](docs/05-data-switching.md).
+Veri kaynağını iki yoldan seçebilirsiniz:
+
+- `.env` içindeki `DATA_SOURCE=mock|remote` satırı — kalıcı tercih.
+- Çalıştırırken `--dart-define`, ki `.env`'i geçersiz kılar:
+
+```bash
+flutter run --dart-define=DATA_SOURCE=remote   # gerçek OpenSky verisi
+```
+
+Öncelik: `--dart-define=DATA_SOURCE` > `.env`'deki `DATA_SOURCE` > `mock`.
+injectable bu değere göre başlangıçta mock veya remote repository'yi bağlar;
+remote için `.env`'e OpenSky anahtarları gerekir. Ayrıntı:
+[docs/05-data-switching.md](docs/05-data-switching.md).
 
 ## Test
 
